@@ -1,0 +1,491 @@
+TP6 BDD 
+Gallet Kevin
+Vaneenoo Charles
+L3S5 G4
+
+ charger DES
+ cd /home/enseign/  
+ cd DES/
+ ./des 
+
+INTRO DES : OK
+---- 42=42
+
+ {
+  42=42
+}
+Info: 1 tuple computed.          
+
+
+---- 42=2015
+
+{
+}
+Info: 0 tuples computed.          
+
+
+tester la base:
+
+/consult princesse1.dl
+
+PATIE 1 HISTOIRE DE JALOUSIE OK 
+
+Q1:  voir base.dl
+
+Q2:
+DES> /c base.dl
+
+Info: 9 rules consulted.
+
+DES> /consult base
+
+Info: 9 rules consulted.
+
+DES> /c base.dl
+
+Info: 9 rules consulted.
+
+DES> /consult base.dl
+
+Info: 9 rules consulted.
+
+Q3:
+DES> /listing
+
+aime(lapin,mon_chou).
+aime(marcellus,mia).
+aime(mon_chou,lapin).
+aime(vincent,mia).
+aime(vincent,pierre).
+est_jaloux(x,y) :-
+  aime(x,y),
+  aime(y,x).
+femme(jody).
+femme(mia).
+femme(yolande).
+
+Info: 9 rules listed.
+
+DES> /listing femme
+
+femme(jody).
+femme(mia).
+femme(yolande).
+
+Info: 3 rules listed.
+
+Q4:
+DES> femme(mia),femme(yolande),not(femme(lapin)).
+
+Info: Processing:
+  answer :-
+    femme(mia),
+    femme(yolande),
+    not femme(lapin).
+{                                           
+  answer
+}
+Info: 1 tuple computed. 
+
+Q5:
+DES> /listing femme
+
+femme(jody).
+femme(mia).
+femme(yolande).
+
+Info: 3 rules listed.
+
+Q6:
+
+DES> femme(X), aime(vincent,X)
+
+Info: Processing:
+  answer(X) :-
+    femme(X),
+    aime(vincent,X).
+{                                           
+  answer(mia)
+}
+Info: 1 tuple computed.          
+
+Q7:
+DES> homme(X),aime(vincent,X)
+
+Info: Processing:
+  answer(X) :-
+    homme(X),
+    aime(vincent,X).
+Warning: Undefined predicate: [homme/1]
+{                                           
+}
+Info: 0 tuples computed.  
+
+On a pas defini les hommes il faut utiliser un not
+
+aime(vincent,X),not(femme(X))
+
+Info: Processing:
+  answer(X) :-
+    aime(vincent,X),
+    not femme(X).
+{                                           
+  answer(pierre)
+}
+Info: 1 tuple computed.          
+
+Q8:
+DES> est_jaloux(vincent,X)
+
+{                                           
+  est_jaloux(vincent,marcellus),
+  est_jaloux(vincent,vincent)
+}
+Info: 2 tuples computed.          
+
+Q9:
+DES> est_jaloux(vincent,_)
+
+Info: Processing:
+  answer :-
+    est_jaloux(vincent,_).
+{                                           
+  answer
+}
+Info: 1 tuple computed.          
+
+PARTIE 2 : GRAPHE OK
+Q10: voir graph.dl
+
+Q11:
+DES> p(X,Y)
+
+{                                           
+  p(a,b),
+  p(a,c),
+  p(a,f),
+  p(a,g),
+  p(b,c),
+  p(b,f),
+  p(b,g),
+  p(d,a),
+  p(d,b),
+  p(d,c),
+  p(d,e),
+  p(d,f),
+  p(d,g),
+  p(e,f),
+  p(e,g),
+  p(f,g)
+}
+Info: 16 tuples computed.          
+
+Q12:
+DES> p(X,Y)
+
+{                                           
+  p(a,a),
+  p(a,b),
+  p(a,c),
+  p(a,d),
+  p(a,e),
+  p(a,f),
+  p(a,g),
+  p(b,a),
+  p(b,b),
+  p(b,c),
+  p(b,d),
+  p(b,e),
+  p(b,f),
+  p(b,g),
+  p(c,a),
+  p(c,b),
+  p(c,c),
+  p(c,d),
+  p(c,e),
+  p(c,f),
+  p(c,g),
+  p(d,a),
+  p(d,b),
+  p(d,c),
+  p(d,d),
+  p(d,e),
+  p(d,f),
+  p(d,g),
+  p(e,f),
+  p(e,g),
+  p(f,g)
+}
+Info: 31 tuples computed.
+
+Q13:
+On ne peut pas determiner combien de cycles sont traversés
+
+Q14:
+DES> pair(X,Y)
+
+{                                           
+  pair(a,c),
+  pair(a,f),
+  pair(b,d),
+  pair(b,g),
+  pair(c,a),
+  pair(c,e),
+  pair(d,b),
+  pair(d,f),
+  pair(d,g),
+  pair(e,g)
+}
+Info: 10 tuples computed.  
+
+DES> impair(X,Y).
+
+{                                           
+  impair(a,b),
+  impair(b,c),
+  impair(b,f),
+  impair(c,d),
+  impair(d,a),
+  impair(d,e),
+  impair(e,f),
+  impair(e,g),
+  impair(f,g)
+}
+Info: 9 tuples computed.          
+
+       
+
+PARTIE 3 LES PRINCESSES ET LES TIGRES
+
+Q15
+1er cas : Affiche 1 faux et Affiche 2 vrai
+
+Affiche 1 : Il n'y a pas de princesse dans cette cellule ou il n'y a pas de tigre dans l'autre.
+
+Affiche 2 : Il y a une princesse dans une cellule et il y a un tigre dans une cellule.
+	
+Ce cas est le seul possible et il indique qu'il n'y a qu'une princesse et qu'un seul tigre.
+Dans tous les cas, la princesse est dans la cellule 2 et le tigre est dans la cellule 1.
+
+2eme cas : Affiche 1 vrai et Affiche 2 faux
+
+Affiche 1 : Il y a une princesse dans cette cellule et un tigre dans l'autre.
+Affiche 2 : Il n'y a pas de princesse dans une cellule ou il n'y a pas de tigre dans une cellule.
+
+On a une contradiction car l'affiche 1 indique la porte à choisir, mais dans le même temps
+l'affiche 2 annonce qu'il n'y a ni princesse ni tigre dans les cellules.
+
+Q16
+P1 = il y a une princesse dans la cellule 1
+T1 = il y a un tigre dans la cellule 1
+P2 = il y a une princesse dans la cellule 2
+T2 = il y a un tigre dans la cellule 2
+
+Affiche 1 : P1 AND T2
+
+Affiche 2 : (P1 AND T2) OR (P2 AND T1)
+
+Q17
+
+(NOT(Affiche 1) AND (Affiche 2)) OR ((Affiche 1) AND NOT(Affiche 2))
+<=>(NOT(P1 AND T2) AND ((P1 AND T2) OR (P2 AND T1))) OR ((P1 AND T2) AND NOT((P1 AND T2) OR (P2 AND T1)))
+
+Q18
+
+Voir princesse2.dl
+
+DES> solutions(X,Y)
+
+{                                           
+}
+Info: 0 tuples computed.          
+
+PARTIE 4 RESOLUTION EN SWI PROLOG
+vaneenoo@a15p15:~/Documents/BDD/tp6BDD$ swipl
+?- [crisefinanciere].
+% crisefinanciere compiled 0.00 sec, 6 clauses
+true.
+
+
+
+Q19:
+?- doit_argent(X,Y).
+X = anne,
+Y = barbara ;
+X = barbara,
+Y = cecile ;
+X = cecile,
+Y = barbara ;
+
+
+Q20: 
+evite(X,Z).
+X = anne,
+Z = barbara ;
+X = barbara,
+Z = cecile ;
+X = cecile,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+X = anne,
+Z = barbara ;
+X = anne,
+Z = cecile ;
+On a une boucle infinie
+
+Q21:
+DES> evite(X,Y).
+
+{                                           
+  evite(anne,barbara),
+  evite(anne,cecile),
+  evite(barbara,barbara),
+  evite(barbara,cecile),
+  evite(cecile,barbara),
+  evite(cecile,cecile)
+}
+Info: 6 tuples computed.          
+
+Des nous renvoie juste les tuples une seule fois tandis que swipl nous les renvoie en boucle infinie
+
+
+PARTIE 5 PARSING EN LANGAGE NATUREL
+
+Q22: voir arbresphrase1.txt
+
+Q23: voir phrase1.dl
+DES> /c phrase1.dl
+
+Info: 5 rules consulted.
+
+Q24: 
+voir dictionnaire1.dl et phrase1.dl
+
+/[phrase1.dl,dictionnaire1.dl]
+
+DES> det(X,Y)
+
+{                                           
+  det(0,1),
+  det(3,4)
+}
+Info: 2 tuples computed.     
+
+DES> n(X,Y)
+
+{                                           
+  n(1,2),
+  n(4,5)
+}
+Info: 2 tuples computed.  
+
+Q25: voir grammaire1.dl
+/[phrase1.dl,dictionnaire1.dl,grammaire1.dl]
+
+DES>  np(0,X)
+
+{                                           
+  np(0,2)
+}
+Info: 1 tuple computed.          
+
+Q26:
+DES> s(0,X)
+
+{                                           
+  s(0,5)
+}
+Info: 1 tuple computed.          
+
+Q27:
+Un homme voit une licorne avec un telescope
+On a 2 sens cela depend si c'est l'homme ou la licorne qui a un telescope.
+
+Q28: voir phrase2.dl
+/[phrase2.dl,dictionnaire2.dl,grammaire1.dl]
+
+Q29: Une PP est une preposition et un nom commun :  pp(X,Y) :- prep(X,Z), np(Z,Y).
+
+Q30: voir dictionnaire2.dl
+
+Q31: voir grammaire2.dl
+
+Q32:
+DES> vp(X,Y)
+
+    {
+      vp(2,5),
+      vp(2,8)
+    }
+    Info: 2 tuples computed.
+
+    On trouve deux VP avec des tailles différentes:
+vp(2,5) : sees a unicorn
+vp(2,8) : sees a unicorn with a telescope
+On a donc bien les 2 interpretations de la phrase.
+
+Q33:
+voir dictionnaire3.dl
+On declare une conjonction 
+conj(X,Y) :- and(X,Y).
+
+On gère les différents np et adjectif
+
+np(X,Y) :- det(X,Z), n(Z,Y).
+np(X,Y) :- det(X,W), adjectif(W,Z), n(Z,Y).
+np(X,Y) :- np(X,Z), pp(Z,Y).
+adjectif(X,Y) :- adj(X,Y).
+adjectif(X,Y) :- adj(X,W), conj(W,Z), adjectif(Z,Y).
+
+
+DES> /[phrase3,dictionnaire3,grammaire3]
+
+Info: 34 rules consulted.
+Warning: Undefined predicate(s): [and/2,lucky/2,sings/2,song/2]
+
+DES> s(X,Y)                             
+
+{
+  s(0,7),
+  s(0,11)
+}
+Info: 2 tuples computed.
+
+DES> /[phrase4,dictionnaire3,grammaire3]
+
+Info: 35 rules consulted.
+Warning: Undefined predicate(s): [long/2,sings/2,song/2]
+
+DES> s(X,Y)                             
+
+{
+  s(0,9),
+  s(0,12)
+}
+Info: 2 tuples computed.
+On retrouve les resultats attendus et les deux différentes interpretations de phrases.

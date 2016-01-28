@@ -1,0 +1,102 @@
+TP3 BDD - L3S5
+Gallet Kevin
+Vaneenoo Charles
+
+
+Q1:
+SET search_path to TP2_gallet_vaneenoo;
+select anom, count(acoul) from Articles group by anom;
+
+
+Q2:
+SET search_path to TP2_gallet_vaneenoo;
+select articles.anom, max(catalogue.prix), min(catalogue.prix), count(fournisseurs.fid), avg(catalogue.prix)
+from articles natural join catalogue natural join fournisseurs 
+group by articles.anom 
+having count(fournisseurs.fid) >1
+order by avg(catalogue.prix);
+
+
+Q3:
+SET search_path to TP2_gallet_vaneenoo;
+select acoul, count(acoul) from articles group by acoul  having  count(acoul)=1
+
+
+Q4:
+SET search_path to TP2_gallet_vaneenoo;
+select articles.acoul as COULEUR, avg(catalogue.prix) as PRIX_MOYEN from articles natural join catalogue 
+group by articles.acoul, articles.anom
+having sum(articles.aid)>1  
+except 
+select articles.acoul as COULEUR, avg(catalogue.prix) as PRIX_MOYEN from articles natural join catalogue 
+where articles.anom='Ferrari F430'
+group by articles.acoul , articles.anom
+having sum(articles.aid)>1
+order by PRIX_MOYEN desc
+
+
+Q5:
+SET search_path to TP2_gallet_vaneenoo;
+select Articles.anom, articles.acoul, count(fournisseurs.fid=catalogue.fid) from Articles natural join fournisseurs natural join catalogue group by anom, articles.acoul;
+
+
+Q6: 
+SET search_path to TP2_gallet_vaneenoo;
+select(aid), count(fid) as nb_fournisseurs from articles natural join catalogue 
+group by aid 
+union 
+select aid,null from articles 
+except 
+select aid,null from catalogue
+
+
+Q7:
+SET search_path to TP2_gallet_vaneenoo;
+select fnom, count(distinct anom) from catalogue natural join fournisseurs natural join articles group by fnom having count(distinct anom) >1
+
+
+Q8:
+SET search_path to TP2_gallet_vaneenoo;
+select articles.anom, fournisseurs.fnom
+from fournisseurs natural join catalogue natural join articles
+group by articles.anom, fournisseurs.fnom
+having count(articles.anom) >1
+
+
+Q9:
+SET search_path to TP2_gallet_vaneenoo;
+select articles.anom, count(fournisseurs.fid)
+from articles natural join catalogue natural join fournisseurs
+group by articles.anom 
+having count(fournisseurs.fid) =1 
+
+
+Q10: 
+SET search_path to TP2_gallet_vaneenoo;
+select distinct substring(anom,1,1) as lettre, count(substring(anom,1,1)) from articles group by anom order by substring(anom,1,1)
+
+
+Q11:
+SET search_path to TP2_gallet_vaneenoo;
+Alter table articles alter column acoul type varchar(30);
+select distinct substring(acoul,1,1) AS couleur, count(acoul)
+from articles
+group by couleur
+order by couleur
+
+
+Q12:
+SET search_path to TP2_gallet_vaneenoo; 
+select * from articles join catalogue on articles.aid = catalogue.aid
+
+SET search_path to TP2_gallet_vaneenoo; 
+select * from articles join catalogue using (aid)
+
+USING ET ON permettent de rassembler les tables avec l’AID.
+la difference est que USING supprime une colonne aid, USING evite d’avoir une colonne en doublon.
+
+
+
+
+
+

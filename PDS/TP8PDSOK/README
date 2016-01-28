@@ -1,0 +1,11 @@
+GALLET Kévin
+VANEENOO Charles
+
+Toutes les questions ont été traités,
+nous n'avons pas fait les tests pour les fichiers dont le nombre de
+génômes > 10^7, cela prend trop de temps pour l'ordinateur.
+
+Les .txt et .dat qui servent à la création sont supprimés à la fin du test.sh.
+
+Nous ne sommes pas parvenu à afficher les légendes sur les axes du gnuplot.
+

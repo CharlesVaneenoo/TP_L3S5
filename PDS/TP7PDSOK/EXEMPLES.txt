@@ -1,0 +1,69 @@
+1/
+TASK liste des jobs
+MSHELL xclock &
+MSHELL ps &
+[2] (1790) ps
+MSHELL jobs
+RES doit afficher les 2 jobs correspondant a xclocl et ps
+
+2/
+TASK tuer un processus avec ctrl+c (par un signal)
+MSHELL xeyes puis ctrl+c
+TERM xeyes puis ctrl+c
+RES xeyes doit apparaitre puis il doit etre tuer avec le signal de ctrl+c
+
+3/
+TASK mettre en pause un processus avec ctrl+z (par un signal)
+MSHELL xeyes puis ctrl+z
+TERM xeyes puis ctrl+z
+RES xeyes doit apparaitre puis il doit etre mis en pause avec le signal de ctrl+z
+
+4/
+TASK mettre en avant plan un processus
+MSHELL xeyes + ctrl+z, ps -a pour recuperer le pid de xeyes et taper fg "pid de xeyes"
+RES xeyes repasse en avant plan
+
+5/
+TASK mettre en arriere plan un processus
+MSHELL xeyes + ctrl+z, ps -a pour recuperer le pid de xeyes et taper bg "pid de xeyes"
+RES xeyes passe en arrière plan
+
+6/
+TASK stopper un processus
+MSHELL xeyes + ctrl+z, ps -a pour recuperer le pid de xeyes et taper stop "pid de xeyes"
+RES xeyes est alors stoppé
+
+7/
+TASK tuer un processus
+MSHELL xeyes + ctrl+z, ps -a pour recuperer le pid de xeyes et taper kill "pid de xeyes"
+RES le processus xeyes est alors tué
+
+8/
+TASK sortir du mini shell à l'aide de exit
+MSHELL exit
+TERM exit
+RES On quitte immediatement le mini shell et le terminal
+
+9/
+TASK tester le pipe à 2 commandes
+MSHELL cat Makefile | wc -c
+TERM cat Makefile | wc -c
+RES on trouve le meme résultat pour les deux commandes
+
+10/
+TASK tester le pipe à 3 commandes
+MSHELL cat Makefile | wc -c | wc -c
+TERM cat Makefile | wc -c | wc -c
+RES on trouve le meme résultat pour les deux commandes
+
+11/
+TASK tester le pipe à 4 commandes
+MSHELL cat Makefile | wc -c | wc -c | wc -l
+TERM cat Makefile | wc -c | wc -c | wc -l
+RES on trouve le meme résultat pour les deux commandes
+
+12/
+TASK tester le pipe avec deux commandes qui restent en avant plan
+MSHELL xeyes | xeyes
+TERM xeyes | xeyes
+RES le mini shell et le terminal ne sont plus accessibles, les 2 processus sont en avant plan.

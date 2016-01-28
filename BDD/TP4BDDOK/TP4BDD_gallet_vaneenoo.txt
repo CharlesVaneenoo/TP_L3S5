@@ -1,0 +1,151 @@
+TP4 BDD - L3S5
+Gallet Kevin
+Vaneenoo Charles
+
+
+Q1: OK
+SET search_path to TP2_gallet_vaneenoo;
+select acoul,count(aid) from articles group by acoul having count(aid) = 1
+
+SET search_path to TP2_gallet_vaneenoo;
+select acoul  from articles a1 where not exists 
+(select acoul from articles a2 where a1.anom <>a2.anom and a1.acoul=a2.acoul);
+
+
+Q2: OK
+SET search_path to TP2_gallet_vaneenoo;
+select anom from articles a1 where a1.acoul ='rouge' and not exists(
+select * from articles a2 where a1.anom = a2.anom and a2.acoul='vert');
+
+SET search_path to TP2_gallet_vaneenoo;
+select anom from articles a1 where a1.acoul='rouge' and a1.anom <> all(
+select a2.anom from articles a2 where a2.acoul='vert');
+
+SET search_path to TP2_gallet_vaneenoo;
+select anom from articles a1 where a1.acoul='rouge' and a1.anom not in (
+select a2.anom from articles a2 where a2.acoul='vert');
+
+Q3: OK
+Oui on peut avoir le résultat sans utiliser le groupage
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom, c1.prix, a1.acoul 
+from fournisseurs f1 natural join articles a1 natural join catalogue c1 
+where acoul='rouge' and not exists 
+(select c2.prix from catalogue c2 where c2.prix>c1.prix);
+
+Q4: OK
+SET search_path to TP2_gallet_vaneenoo;
+select a2.anom from articles a2 natural join fournisseurs f2 natural join catalogue c2 group by a2.anom having count(f2.fid)>1
+
+SET search_path to TP2_gallet_vaneenoo;
+select distinct a1.anom from catalogue c1 natural join articles a1 where exists (select * from catalogue c2 where c1.aid=c2.aid and c1.fid<>c2.fid);
+
+Q5: OK 
+SET search_path to TP2_gallet_vaneenoo;
+select fnom,count(fid),max(fid) from fournisseurs natural join articles natural join catalogue group by fnom having count(fid)=max(fid)
+
+SET search_path to TP2_gallet_vaneenoo;
+select distinct f1.fnom from fournisseurs f1 natural join catalogue c1
+where not exists 
+(select * from fournisseurs f2 natural join catalogue c2 where f1.fid=c1.fid and c1.aid<>c2.aid );
+
+Q6: OK
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom
+from fournisseurs f1 natural join articles a1 natural join catalogue c1 
+where not exists 
+(select c2.prix from catalogue c2 where c2.prix>c1.prix);
+
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom
+from fournisseurs f1 natural join articles a1 natural join catalogue c1 
+where prix >= ALL (select prix from catalogue);
+
+Q7: OK
+SET search_path to TP2_gallet_vaneenoo;
+select anom,prix from articles natural join catalogue c1 natural join fournisseurs f1 where not exists(
+select * from fournisseurs f2 natural join catalogue c2 where f1.fid = f2.fid and c1.prix > c2.prix)
+
+/** IL AFFICHE LES ARTICLES QUI N'ONT QU'UN SEUL PRIX **/
+SET search_path to TP2_gallet_vaneenoo;
+select anom,min(prix),max(prix) from articles natural join catalogue c1 where exists(
+select * from catalogue c2 where c1.fid = c2.fid) group by anom
+
+Q8: OK
+SET search_path to TP2_gallet_vaneenoo;
+select distinct f1.fnom, a1.anom from fournisseurs f1 natural join articles a1 natural join catalogue c1 where exists (
+select * from fournisseurs f2 natural join articles a2 natural join catalogue c2 where c1.fid=c2.fid and a1.anom=a2.anom and a1.acoul<>a2.acoul );
+
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom, a1.anom
+from fournisseurs f1 natural join articles a1 natural join catalogue c1 
+where acoul > some (select acoul from fournisseurs f2 natural join articles a2 natural join catalogue c2  where a1.acoul<>a2.acoul and c1.fid=c2.fid and a1.anom=a2.anom);
+
+Q9: OK
+SET search_path to TP2_gallet_vaneenoo;
+select count(c1.aid), c1.fid from catalogue c1 group by c1.fid having count(c1.aid) >=all(select count(c2.aid) from catalogue c2 group by c2.fid;
+
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fid, max(a1.aid) 
+from fournisseurs f1 natural join articles a1 natural join catalogue c1
+group by f1.fid having count(a1.aid)=max(a1.aid)
+
+Q10:OK
+SET search_path to TP2_gallet_vaneenoo;
+select a1.anom from articles a1 natural join catalogue c1 natural join fournisseurs f1  where not exists (select * from articles a2 natural join catalogue c2 natural join fournisseurs f2  where a1.anom=a2.anom and f1.fid<>f2.fid)
+
+SET search_path to TP2_gallet_vaneenoo;
+select a1.anom from articles a1 natural join catalogue c1 natural join fournisseurs f1  group by anom having count(c1.fid)=1
+
+Q11: OK 
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom from fournisseurs f1 where not exists (
+select * from catalogue c2 where f1.fid=c2.fid)
+
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom, f1.fid from fournisseurs f1 full join catalogue c1 on f1.fid=c1.fid where f1.fid <> all( select fid from catalogue where c1.fid=f1.fid)
+
+SET search_path to TP2_gallet_vaneenoo;
+select f1.fnom from fournisseurs f1 where fid not in (
+select fid from catalogue c2 where f1.fid=c2.fid)
+
+Q12:
+SET search_path to TP2_gallet_vaneenoo;
+select a1.aid from articles a1 where exists (select * from catalogue c2 where a1.aid=c2.aid and c2.prix>100)
+
+SET search_path to TP2_gallet_vaneenoo;
+select a1.aid from articles a1 natural join catalogue c2 where prix in (select prix from catalogue c2 where a1.aid=c2.aid and c2.prix>100)
+
+SET search_path to TP2_gallet_vaneenoo;
+select a1.aid from articles a1 natural join catalogue c1 where prix > all (select prix from catalogue c2 where c1.aid=c2.aid and c2.prix<100)
+
+Q13:
+SET search_path to TP2_gallet_vaneenoo;
+select aid from articles a1 natural join catalogue c1 natural join fournisseurs f1 where exists(
+select * from fournisseurs f2 where f1.fad = f2.fad and f2.fad like '%USA%')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,8 @@
+Kévin GALLET
+Charles VANEENOO
+
+make / make all pour tout compiler
+
+make prlimit_test pour lancer le test de prlimit
+
+make session_sh pour lancer le script de l'exercice 3 

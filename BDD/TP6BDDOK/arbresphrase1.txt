@@ -1,0 +1,14 @@
+			S
+		    /\
+		   /  \
+		  NP   VP
+		  /\   /\
+		 /  |  | \
+	  Det   N  V  NP
+	  /		|  |   \\
+	 /		|  |	\\
+	/		|  |	 \\
+	The	  man  sings  \\
+					  / \
+					 /   \
+					 a    song

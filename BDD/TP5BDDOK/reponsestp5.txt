@@ -1,0 +1,84 @@
+TP5 BDD
+Gallet Kevin
+Vaneenoo Charles
+
+Q1 OK
+SET search_path to TP5_gallet_vaneenoo;
+select distinct e1.eid, max(portee)
+from employes e1 natural join certifications c1 natural join avions a1 
+where e1.eid = c1.eid and c1.aid=a1.aid
+group by eid
+having count(aid)>=2
+
+Q2 OK
+SET search_path to TP5_gallet_vaneenoo;
+select e1.enom
+from employes e1 natural join certifications c1 natural join vols v1 natural join avions a1
+where v1.dep='CDG' and V1.arr='NOU'
+group by enom, salaire
+having e1.salaire < min(v1.prix)
+
+Q3 OK 
+
+SET search_path to TP5_gallet_vaneenoo;
+
+select dep, arr, distance
+from  vols v1 
+where distance <(select min(nom1) from 
+(select max(portee) as nom1 from avions natural join certifications natural join 
+(select * from pilote where salaire>100000) as nombidon2 group by eid) as nombidon3)
+
+
+Q4 OK
+SET search_path to TP5_gallet_vaneenoo;
+select distinct e1.enom
+from employes e1 natural join certifications c1 natural join avions a1
+where portee> 1500 and not
+EXISTS( select distinct e2.enom, portee 
+from employes e2 natural join certifications c2 natural join avions a2
+where e2.enom=e1.enom and a2.portee<1500) 
+group by enom
+
+Q5 OK
+SET search_path to TP5_gallet_vaneenoo;
+select distinct e1.enom
+from employes e1 natural join certifications c1 natural join avions a1
+where portee>1500 and
+not exists( select distinct e2.enom
+from employes e2 natural join certifications c2 natural join avions a2
+where e2.enom=e1.enom and a2.portee<1500 and c1.aid<>c2.aid) 
+group by enom
+having count(a1.aid)>=2
+
+Q6 OK
+SET search_path to TP5_gallet_vaneenoo;
+select distinct e1.enom
+from employes e1 natural join certifications c1 natural join avions a1
+where a1.anom like '%Boeing%' and
+not EXISTS ( select * from avions natural join certifications c2 
+where c2.eid = e1.eid and portee <= 1500) 
+
+Q7 OK
+SET search_path to TP5_gallet_vaneenoo;
+select enom,eid from employes order by salaire DESC LIMIT 1 OFFSET 1
+
+Q8 OK
+SET search_path to TP5_gallet_vaneenoo;
+select distinct e1.enom from 
+employes e1 natural join certifications c1 natural join avions a1 
+where portee>2000
+and not exists (select e1.enom from avions a2 natural join certifications c2 natural join employes e2 where e1.enom=e2.enom and a2.anom like '%Boeing%' )
+
+Q9 OK
+SET search_path to TP5_gallet_vaneenoo;
+select enom,salaire from employes e1 where not exists
+(select * from certifications c where c.eid=e1.eid) 
+and salaire >= (select avg(salaire) from employes natural join certifications)
+
+Q10 OK
+SET search_path to TP5_gallet_vaneenoo;
+create view pilote as select * from employes where eid=any(select eid from certifications);
+select avg(p.salaire)-avg(e.salaire) as Difference from employes e, pilote p
+
+Q11 OK
+A notre niveau on ne peut pas le faire mais on a vu lors du cours qu'il est possible de le faire recursivement.

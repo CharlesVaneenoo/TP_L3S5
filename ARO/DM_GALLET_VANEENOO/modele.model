@@ -1,0 +1,91 @@
+/*
+Gallet Kevin
+Vaneenoo Charles
+*/
+
+/*Reinitialisation*/ 
+reset;
+
+/*Choix du solveur*/ 
+option solver gurobi;
+
+## Declaration des ensembles
+set DETAILLANTS; 
+set REGIONS;
+set CATEGORIES;
+
+## Declaration des Parametres
+
+/*Parametres initiaux*/
+param region{DETAILLANTS} symbolic in REGIONS;
+param huile{DETAILLANTS} >= 0;
+param nb_pts_vente{DETAILLANTS} >= 0;
+param spiritueux{DETAILLANTS} >= 0;
+param categorie{DETAILLANTS} symbolic in CATEGORIES;
+
+/*Parametres intermediaires*/
+param nb_pts_vente_total = sum{d in DETAILLANTS} nb_pts_vente[d];
+param spiritueux_total = sum{d in DETAILLANTS} spiritueux[d];
+param huile_total_region{r in REGIONS} = sum{d in DETAILLANTS : region[d] = r} huile[d]; 
+param detaillants_total_categorie{c in CATEGORIES} = sum{d in DETAILLANTS : categorie[d] = c} 1;
+
+## Declaration des variables
+
+/*Variables initiales*/
+	/* Variable principale */
+var detaillant_de_D1{DETAILLANTS} binary;
+	/* Autres variables */
+			/* Question 1 */
+var borne_nb_pts_vente >= 0, <= 0.05;
+var borne_spiritueux >= 0, <= 0.05;
+var borne_huile{REGIONS} >= 0, <= 0.05;
+var borne_detaillants{CATEGORIES} >= 0, <= 0.05;
+			/* Question 2 */
+var borne_sup >=0, <= 0.05;
+
+/*Variables intermediaires*/
+var nb_pts_vente_D1 = sum{d in DETAILLANTS} detaillant_de_D1[d] * nb_pts_vente[d];
+var spiritueux_D1 = sum{d in DETAILLANTS} detaillant_de_D1[d] * spiritueux[d];
+var huile_D1{r in REGIONS} = sum{d in DETAILLANTS : region[d] = r} detaillant_de_D1[d] * huile[d];
+var detaillants_D1{c in CATEGORIES} = sum{d in DETAILLANTS : categorie[d] = c} detaillant_de_D1[d];
+
+var rapport_nb_pts_vente_D1 = nb_pts_vente_D1 / nb_pts_vente_total;
+var rapport_spiritueux_D1 = spiritueux_D1 / spiritueux_total;
+var rapport_huile_D1{r in REGIONS} = huile_D1[r] / huile_total_region[r];
+var rapport_detaillants_D1{c in CATEGORIES} = detaillants_D1[c] / detaillants_total_categorie[c];
+var somme_bornes = borne_nb_pts_vente + borne_spiritueux + sum{r in REGIONS} borne_huile[r] + sum{c in CATEGORIES} borne_detaillants[c];
+
+## Objectif
+/*Objectif de la question 1*/ 
+#maximize q1 :
+#1;
+
+/*Objectif de la question 2.1*/ 
+#minimize somme_variation_vabs :
+#somme_bornes;
+
+/*Objectif de la question 2.2*/
+minimize variation_max_vabs :
+ borne_sup;
+
+## Contraintes
+/*Contraintes liees au nombre de points de vente de la division D1*/ 
+subject to nb_pts_vente_min : rapport_nb_pts_vente_D1 >= 0.40 - borne_nb_pts_vente;
+subject to nb_pts_vente_max : rapport_nb_pts_vente_D1 <= 0.40 + borne_nb_pts_vente;
+
+/*Contraintes liees au marche des spiritueux de la division D1*/ 
+subject to spiritueux_min : rapport_spiritueux_D1 >= 0.40 - borne_spiritueux;
+subject to spiritueux_max : rapport_spiritueux_D1 <= 0.40 + borne_spiritueux;
+/*Contraintes liees au marche de l'huile par region de la division D1*/ 
+subject to huile_par_region_min{r in REGIONS} : rapport_huile_D1[r] >= 0.40 - borne_huile[r];
+subject to huile_par_region_max{r in REGIONS} : rapport_huile_D1[r] <= 0.40 + borne_huile[r];
+
+/*Contraintes liees au nombre de detaillants par categorie de la division D1*/ 
+subject to detaillants_par_categorie_min{c in CATEGORIES} : rapport_detaillants_D1[c] >= 0.40 - borne_detaillants[c];
+subject to detaillants_par_categorie_max{c in CATEGORIES} : rapport_detaillants_D1[c] <= 0.40 + borne_detaillants[c];
+
+/*Contraintes liees a la borne superieure*/ 
+subject to borne_sup_nb_pts_vente : borne_sup >= borne_nb_pts_vente; 
+subject to borne_sup_spiritueux : borne_sup >= borne_spiritueux; 
+subject to borne_sup_huile_region{r in REGIONS} : borne_sup >= borne_huile[r];
+subject to borne_sup_detaillant_categorie{c in CATEGORIES} : borne_sup >= borne_detaillants[c];

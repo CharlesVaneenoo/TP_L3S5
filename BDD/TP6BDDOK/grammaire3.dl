@@ -1,0 +1,13 @@
+np(X,Y) :- det(X,Z), n(Z,Y).
+np(X,Y) :- det(X,W), adjectif(W,Z), n(Z,Y).
+np(X,Y) :- np(X,Z), pp(Z,Y).
+
+adjectif(X,Y) :- adj(X,Y).
+adjectif(X,Y) :- adj(X,W), conj(W,Z), adjectif(Z,Y).
+
+vp(X,Y) :- v(X,Z), np(Z,Y).
+vp(X,Y) :- vp(X,Z), pp(Z,Y).
+
+pp(X,Y) :- prep(X,Z), np(Z,Y).
+
+s(X,Y) :- np(X,Z), vp(Z,Y).

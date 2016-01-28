@@ -1,0 +1,53 @@
+Jérémy MATHIAS
+Pierre HEQUETTE
+Charles VANEENOO
+Gr4
+
+----------------------------------------------------------------
+TP DONJON
+----------------------------------------------------------------
+
+Les classes sources.java sont dans le repertoire src
+
+Les fichiers sources des tests sont dans le repertoire test
+
+Un make clean permet de nettoyer l'environnement de travail
+
+
+
+----------------------------------------------------------------
+
+Pour compiler les sources à partir de la racine du projet:
+make compile
+Les fichiers .class sont créés dans le repertoire classes
+
+----------------------------------------------------------------
+
+Pour compiler la doc:
+make docs
+La documentation est créée dans le repertoire docs
+
+----------------------------------------------------------------
+
+Pour compiler les tests à partir de la racine du projet:
+make test
+Les fichiers créés sont dans le repertoire tests
+
+----------------------------------------------------------------
+Pour executer les tests à partir de la racine du projet:
+Nous n'arrivons pas a executer les tests à partir du makefile mais avec eclipse nous avons pu voir qu'ils s'executent sans erreurs.
+
+----------------------------------------------------------------
+
+Pour compiler le jeu en .jar à partir de la racine du projet:
+make jar
+le fichier resultant de cette commande est dungeonGame.jar et se trouve à la racine du projet
+
+----------------------------------------------------------------
+
+Pour executer le jeu à partir de la racine du projet:
+make run
+Le jeu commence et attend vos instructions.
+
+
+----------------------------------------------------------------

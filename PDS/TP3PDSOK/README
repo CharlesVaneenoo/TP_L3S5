@@ -1,0 +1,12 @@
+Kévin Gallet
+Charles Vaneenoo
+
+TP mtail
+
+make all pour compiler mtail et mtail_stupide
+
+make mtail_stupide pour compiler seulement mtail_stupide
+
+make mtail pour compiler le mtail
+
+make test pour lancer le script de test

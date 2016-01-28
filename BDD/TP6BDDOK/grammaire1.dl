@@ -1,0 +1,3 @@
+np(X,Z):- det(X,Y), n(Y,Z).
+vp(X,Z):- v(X,Y), np(Y,Z).
+s(X,Z):- np(X,Y),vp(Y,Z).

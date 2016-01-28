@@ -1,0 +1,19 @@
+Gallet Kevin
+Vaneenoo Charles
+L3S5 Groupe 4
+
+TP9 Tri rapide multithreadé
+
+Le code compile.
+Nous avons défini une structure qui est composée d'un int que l'on a nommé compteur et qui va nous permettre de savoir ou l'on en est dans le tri.
+
+Notre wrapper nous permet de vérifier si le tri est terminé, dépiler un bloc dès qu'il est disponible, le découper en deux et enfin d'empiler les deux nouveaux blocs. On y a ajouté un mutex afin de ne pas avoir deux threads qui travaillent sur le même bloc en même temps.
+
+Dans la fonction rapide, nous créons nos threads à l'aide d'un for puis quand les threads ont finis on les attends. 
+
+
+Nous avons une erreur lors de l'execution sur notre fichier test.
+L'erreur est à la ligne 74 du fichier tri.c  
+
+Voici la ligne en question:
+assert(fscanf(f, FMT_BASE_T, (CAST_BASE_T_PTR) &tableau[i]) > 0);

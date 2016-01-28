@@ -1,0 +1,11 @@
+
+contenu(princesse).
+contenu(tigre).
+
+affiche_1(princesse,tigre).
+
+affiche_2(princesse,tigre).
+affiche_2(tigre,princesse).
+
+solutions(X,Y) :- contenu(X), contenu(Y), affiche_1(X,Y), not(affiche_2(X,Y)).
+solutions(X,Y) :- contenu(X), contenu(Y), not(affiche_1(X,Y)), affiche_2(X,Y)

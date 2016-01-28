@@ -1,0 +1,9 @@
+baisser// bla bla bla
+lever lever baisser
+nord
+ouest 
+sud
+aller 2 3
+pas 3
+
+nord 5 fois

@@ -1,0 +1,46 @@
+exo1:
+
+vaneenoo@a15p15:~/Téléchargements/exemple1/exemple1$  java -jar ../jflex-1.6.1.jar src/exemple1/exemple1.lex
+Reading "src/exemple1/exemple1.lex"
+Constructing NFA : 16 states in NFA
+Converting NFA to DFA : 
+...
+5 states before minimization, 4 states in minimized DFA
+Writing code to "src/exemple1/Yylex.java"
+vaneenoo@a15p15:~/Téléchargements/exemple1/exemple1$ javac -cp src -d bin src/exemple1/TestEx1.java
+vaneenoo@a15p15:~/Téléchargements/exemple1/exemple1$ java -cp bin exemple1.TestEx1 test.txt
+
+Resultats:
+[aéàio][+][ùChocolat][34][a][+][ttt][ttt][ab][-][dAbc_Abc_Abcd][*][de]
+
+
+.|\n -> prends tt les expressions
+
+exo2:
+
+*afficher valeurs*
+
+MacBook-Air-de-Charles:postfixees charlesvaneenoo$ java -jar jflex-1.6.1.jar src/postfixees/postfixees.lex
+MacBook-Air-de-Charles:postfixees charlesvaneenoo$ javac -cp src -d bin src/postfixees/TestPF.java 
+MacBook-Air-de-Charles:postfixees charlesvaneenoo$ java -cp bin postfixees.TestPF testPost.txt
+
+Resultats:
+[45]<Valeur>[4]<Valeur>[+]<Plus>
+[3]<Valeur>[4]<Valeur>[*]<Mult>
+[13]<Valeur>[opp]<Opp>
+[12]<Valeur>[4]<Valeur>[/]<Q>
+[14]<Valeur>[5]<Valeur>[-]<Minus>
+
+
+*afficher resultats*
+
+MacBook-Air-de-Charles:postfixees charlesvaneenoo$ java -jar jflex-1.6.1.jar src/postfixees/postfixees.lex
+MacBook-Air-de-Charles:postfixees charlesvaneenoo$ javac -cp src -d bin src/postfixees/Evaluateur.java
+MacBook-Air-de-Charles:postfixees charlesvaneenoo$ java -cp bin postfixees.Evaluateur testPost.txt
+
+Resultats:
+addition ok : 45 4 + —> 49
+multiplication ok : 3 4 * —> 12
+opposé ok : 13 opp —> -13
+Division ok : 12 4 / —> 3
+soustraction ok : 14 5 - —> 9

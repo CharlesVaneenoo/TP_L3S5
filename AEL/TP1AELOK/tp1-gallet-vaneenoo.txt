@@ -1,0 +1,122 @@
+TP1 AEL - 21/09/2015
+L3S5
+Kevin Gallet
+Charles Vaneenoo
+
+ex 1:
+
+1/
+
+^[A-Z]+[a-z]*
+Chocolat : ok
+chocolat : ko
+
+2/
+
+\+33([0-9]){9}
++33611223344 : ok
++33611 : ko
+0611111111 : ko
+
+3/
+
+[0]+[1-9]|[1]+[0-9]|[2]+[1-9]|[3-8]+[0-9]|[9]+[0-5]|[9]+[7]+[1-5]|[2]+[A]|[2]+[B]
+00 : ko
+01 : ok
+2A : ok
+999 : ko
+975 : ok
+
+4/
+[A-Za-z]+[0-9]*(_[A-Za-z0-9]+)*([0-9]|[A-Za-z])*$
+zkjfjfjfj_d__DDD :ko
+djfjhrh_ddD_ssss : ok
+choco : ok
+
+5/ 0[1-7]|0x([A-Fa-f0-9]*_[A-Fa-f0-9]+)*([1-9]|[A-Fa-f])*$|[1-9]0?(_[0-9]+)*([1-9])*$
+Exemple :
+
+
+102_231_	ko
+102		ok
+0xAfedc_021z	ko
+0xAfedc_021	ok
+08		ko
+01		ok
+
+
+6/ 
+([A-Za-z]+[0-9]*(_[A-Za-z0-9]+)*([0-9]|[A-Za-z])*(\s)?,(\s)?)*
+x ,		ko -> il y a deux espaces
+x, y , z,k	ok
+
+7/ 
+([A-Za-z]+[0-9]*(_[A-Za-z0-9]+)*([0-9]|[A-Za-z])*=?(0[0-7]|0x([A-Fa-f0-9]*_[A-Fa-f0-9]+)*([0-9]|[A-Fa-f])*$|[1-9]0?(_[0-9]+)*([1-9])*)*(\s)?,?(\s)?)*
+
+x, y=3, red=0xFF0000	ok
+
+
+8/
+
+(^")+([A-Za-z0-9]*)+("$)
+"chocolat" : ok
+"chocolat : ko
+
+9/
+(^")+([A-Za-z0-9]|["]{2})*("$)
+"ab""c" : ok
+"""" : ok
+"a"b" : ko
+""" : ko
+
+10/(^")(([\\]{2})|(["]{2})|[A-Za-z0-9]|[\\]["])*("$)
+"a\\b\"c" : ok
+"\\\"" :ok
+"a"b" :ko
+"a\c" :ko
+"a\" : ko
+"\\\" : ko
+
+
+
+11/ Noms XML
+[A-Za-z+_+:]+[A-Za-z+_+:+-+1-9+.]*
+_ : ok
+- : ko
+_abcd123:_- : ok
+abcd= : ko
+
+
+12/Reference d'entité XML
+(^&)+([A-Za-z]*)+(;$)
+&abc; : ok
+abc : ko
+&abc : ko
+abc; :ko
+
+13/ Valeur d'attribut en XML
+(^")(&{0,1})([A-Za-z]*)("$)"abc" :ok
+"&abc" : ok
+aaaaa : ko
+&abc : ko
+
+14/ <[a-z]*(\s)?(([a-z]*(\s)?=(\s)?"[A-Za-z]*")?(\s)?)*>$
+
+
+<button>				ok
+<button name="changer">			ok
+<button type=" name="changer">		ko
+<button type="button" name="changer">	ok
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,58 @@
+Reponses TP2:
+Gallet Kevin - Vaneenoo Charles
+
+Q2.1
+SET search_path to TP2_gallet_vaneenoo;
+select fnom as fournisseur from fournisseurs;
+
+Q2.2
+SET search_path to TP2_gallet_vaneenoo;
+select fnom from fournisseurs where fad like '%Paris';
+
+Q2.3
+SET search_path to TP2_gallet_vaneenoo;
+select distinct fnom from fournisseurs natural join catalogue where (prix<20);
+
+Q2.4
+SET search_path to TP2_gallet_vaneenoo;
+select distinct fid from catalogue where (prix<20 AND prix>10);
+
+SET search_path to TP2_gallet_vaneenoo;
+select distinct fid from catalogue where (prix<20) INTERSECT select distinct fid from catalogue where (prix>10);
+
+Q2.5
+SET search_path to TP2_gallet_vaneenoo;
+select aid from catalogue natural join articles where (acoul='vert' OR acoul='rouge') INTERSECT select aid from catalogue where (prix <20);
+
+Q2.6
+SET search_path to TP2_gallet_vaneenoo;
+select distinct anom from articles natural join catalogue ;
+
+SET search_path to TP2_gallet_vaneenoo;
+select distinct anom from articles right outer join catalogue on articles.aid=catalogue.aid;
+
+SET search_path to TP2_gallet_vaneenoo;
+(select distinct anom from articles INTERSECT select distinct anom from catalogue join articles on articles.aid = catalogue.aid );
+
+Q2.7
+SET search_path to TP2_gallet_vaneenoo;
+select distinct fid from catalogue natural join articles where acoul='rouge';
+
+Q2.8
+SET search_path to TP2_gallet_vaneenoo;
+select fnom,fad from catalogue natural join fournisseurs except select fnom,fad from catalogue natural join fournisseurs where prix <1000;
+
+Q2.9 
+SET search_path to TP2_gallet_vaneenoo;
+select distinct A.anom,A.acoul,B.anom,B.acoul from articles as A cross join articles as B where A.acoul='vert' and B.acoul='rouge';
+Q2.10
+SET search_path to TP2_gallet_vaneenoo;
+select anom from articles except select anom from articles natural join catalogue;
+
+Q2.11
+SET search_path to TP2_gallet_vaneenoo;
+select fid from catalogue natural join articles where acoul='rouge' intersect select fid from catalogue natural join articles where acoul='vert';
+Q2.12
+SET search_path to TP2_gallet_vaneenoo;
+select fnom from catalogue natural join fournisseurs except select fnom from articles natural join catalogue natural join fournisseurs where acoul='noir' or acoul='argente';
+

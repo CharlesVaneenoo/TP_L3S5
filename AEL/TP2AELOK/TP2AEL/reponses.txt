@@ -1,0 +1,19 @@
+Exercice 1 :
+Vaneenoo/Gallet
+Q1)
+ egrep "nez" Cyrano.txt
+ egrep --color=auto "nez" Cyrano.txt -> affiche le mot nez en rouge
+
+Q2)
+ egrep "\(.*\)" Cyrano.txt
+
+Q3)
+egrep --color=auto -n '(^[[:alpha:]]{4}([[:punct:]]|[[:space:]]))|([[:space:]][[:alpha:]]{4}([[:punct:]]|[[:space:]]))' Cyrano.txt
+
+Q4)
+L'espace est pris en compte autour du 1er vous, ce qui explique que le 2eme vous ne peux pas etre pris en compte
+
+Q5)
+egrep  --color=auto -n "[[:upper:]][[:alpha:]]*[[:space:]]\:" Cyrano.txt 
+egrep  --color=auto -n -o "[[:upper:]][[:alpha:]]*[[:space:]]\:" Cyrano.txt 
+

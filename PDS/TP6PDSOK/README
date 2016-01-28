@@ -1,0 +1,28 @@
+Kévin GALLET
+Charles VANEENOO
+
+TP6 do 
+
+Pour le mdo: 
+
+Cas -a : 
+Lorsqu'un processus ne s'exécute pas, sa valeur de retour est égal à 1. 
+Si le processus s'exécute, sa valeur de retour est égal à 0.
+
+Cas -o : 
+Lorsqu'un processus ne s'exécute pas, sa valeur de retour est égal à 0. 
+Si le processus s'exécute, sa valeur de retour est égal à 1.
+
+Pour le cas du -a (AND) et le cas de base (sans option): 
+	
+	Pour n processus lancés, si valFinale = 0 pour le nieme processus alors la valeur de retour du programme est 0, sinon la valeur de retour est 1.
+	Si do renvoit 1 alors une des commandes ne s'est pas exécutée, sinon si do renvoit 0,
+	toutes les commandes se sont bien exécutées.
+
+Pour le cas du -o (OR) :
+
+	Pour n processus lancés, si valFinale = 1 pour le nieme processus alors la valeur de retour du programme est 1, sinon la valeur de retour est 0.
+	Si do renvoit 1 alors toutes les commandes se sont exécutées, sinon si do renvoit 0,
+	une des commandes ne s'est pas exécutée.
+	C'est l'inverse des valeurs de EXIT_SUCCESS et EXIT_FAILURE.
+

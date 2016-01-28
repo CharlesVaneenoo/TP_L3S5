@@ -1,0 +1,69 @@
+TP1 
+
+Exercice 1 : 
+
+1 : project[fnom](Fournisseurs);
+
+2 : select[fad='Paris'](Fournisseurs);
+
+3 : project[fnom](select[fad='Paris'](Fournisseurs));
+
+4 : project[anom](select[acoul='vert'](Articles));
+
+5 : project[aid](select[prix <= 20](Catalogue));
+
+6 : project[fid](select[prix <= 20](Catalogue));
+
+7 : project[fid](select[prix <= 20 and prix >= 10](Catalogue));
+
+8 : project[fid](select[prix <= 20](Catalogue)) 
+	intersect
+	project[fid](select[prix >= 10](Catalogue));
+
+9 : project[aid](select[acoul='vert'](Articles))
+	union
+	project[aid](select[acoul='rouge'](Articles));
+
+
+Exercice 3 : 
+
+1 : project[anom](Catalogue join Articles);
+
+2 : project[anom,prix,fnom](Catalogue join Articles join Fournisseurs);
+
+3 : project[fid]((select[acoul='rouge'](Articles)) join Catalogue);
+
+4 : project[fnom]((select[prix <= 20](Catalogue)) join Fournisseurs); 
+
+5 : project[fid](Catalogue) 
+	minus
+	project[fid](select[prix < 10000](Catalogue));
+
+6 : project[fnom,fad](Fournisseurs)
+	minus
+	project[fnom,fad](select[prix <1000](Catalogue join Fournisseurs));
+
+7 : project[aid](select[acoul = 'rouge'](Articles)) 
+	times 
+	project[aid](select[acoul='vert'](Articles));
+
+8 : project[aid](Articles)
+	minus
+	project[aid](Articles join Catalogue);
+
+9 : project[anom](Articles)
+	minus
+	project[anom](Articles join Catalogue);
+
+10 : project[fid](select[acoul ='rouge'](Articles join Catalogue))
+	intersect
+	project[fid](select[acoul='vert'](Articles join Catalogue));
+
+11 : project[fnom](select[acoul='noir'](Articles join Catalogue join Fournisseurs));
+
+12 : project[fid](select[fidb<> fid and aidb = aid](rename[fidb,aidb,prix](catalogue) times (catalogue)));
+
+13 : project[fnom](Fournisseurs)
+	minus
+	((project[fnom](select[acoul='noir'](Catalogue join Articles join Fournisseurs))) union (project[fnom](select[acoul='argente'](Catalogue join Articles join Fournisseurs))));
+
